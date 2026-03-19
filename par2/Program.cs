@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading;
+using System.Diagnostics;
 
 namespace parLab2
 {
     class Program
     {
-        private static readonly int numberThreads = 10;
-        private static readonly int dim = 1000000;
+        private static readonly int numberThreads = 4;
+        private static readonly int dim = 1000000000;
         private static Thread[] threads = new Thread[numberThreads];
         private static int[] arr = new int[dim];
         private static int minValue = int.MaxValue;
@@ -19,7 +20,10 @@ namespace parLab2
         {
             Program main = new Program();
             main.InitializeArray();
+            Stopwatch stopwatch = Stopwatch.StartNew();
             main.SplitPartsAndStartThreads();
+            stopwatch.Stop();
+            Console.WriteLine($"Time taken: {stopwatch.ElapsedMilliseconds} ms");
             Console.WriteLine($"Minimum value: {minValue} at index: {minIndex}");
         }
         private void InitializeArray()
